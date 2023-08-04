@@ -32,7 +32,7 @@ import Scrollbar from '../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import dataFetch from '../_mock/user';
- // Importa la librería axios para realizar las solicitudes HTTP (instálala si aún no lo has hecho)
+// Importa la librería axios para realizar las solicitudes HTTP (instálala si aún no lo has hecho)
 
 // ----------------------------------------------------------------------
 
@@ -144,7 +144,7 @@ function UserPage() {
       </Helmet>
 
       <Container>
-        
+
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -184,11 +184,16 @@ function UserPage() {
 
                         <TableCell align="left">{email}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">
+                          <Label color={isVerified ? 'success' : 'error'}>
+                            {isVerified ? 'Yes' : 'No'}
+                          </Label>
+                        </TableCell>
+
 
                         <TableCell align="left">
-                          <Label color={(isBlocked === 'banned' && 'error') || 'success'}>
-                          {isBlocked ? 'Yes' : 'No'}
+                          <Label color={(isBlocked === 'banned' && 'error') || (isBlocked ? 'error' : 'success')}>
+                            {isBlocked ? 'Yes' : 'No'}
                           </Label>
                         </TableCell>
 

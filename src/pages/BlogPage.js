@@ -1,13 +1,21 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-// @mui
-import { Grid, Button, Container, Stack, Typography } from '@mui/material';
-// components
+import { Grid, Button, Container, Stack, Typography, TableBody,Avatar,
+  Card,
+  Checkbox,
+  IconButton,
+  MenuItem,
+  Paper,
+  Popover,
+  Table,
+  TableCell,
+  TableContainer,
+  TablePagination,
+  TableRow, } from '@mui/material';
 import Iconify from '../components/iconify';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
-// mock
-import POSTS from '../_mock/blog';
+import denuncias from 'src/_mock/blog';
 
-// ----------------------------------------------------------------------
+
 
 const SORT_OPTIONS = [
   { value: 'latest', label: 'Latest' },
@@ -15,9 +23,28 @@ const SORT_OPTIONS = [
   { value: 'oldest', label: 'Oldest' },
 ];
 
-// ----------------------------------------------------------------------
-
 export default function BlogPage() {
+ 
+    const page = 0; // Replace this with the correct page number
+  const rowsPerPage = 10; // Replace this with the correct number of rows per page
+
+  useEffect(() => {
+    console.log("ole")
+    denuncias()
+      .then(data => {
+        if (data) {
+          console.log("sapos2")
+          setDenuncias(data); // Guardar los datos obtenidos en el estado
+        } else {
+          // Manejar el error o hacer algo en caso de que no se puedan obtener los datos
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener los datos:', error);
+        // Manejar el error o hacer algo en caso de que no se puedan obtener los datos
+      });
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -31,10 +58,17 @@ export default function BlogPage() {
           </Typography>
         </Stack>
 
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
-        </Stack>
+        <TableBody>
+          {denuncias?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+            const { _id, tituloDenuncia, idDenunciante, descripcion, categoria, estado, isDeleted, fechaHora, evidencia } = row;
+        
+            return (
+              <TableRow key={_id}>
+                {}
+              </TableRow>
+            );
+          })}
+        </TableBody>
       </Container>
     </>
   );
